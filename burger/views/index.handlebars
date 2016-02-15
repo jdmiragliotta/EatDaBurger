@@ -1,51 +1,49 @@
-<header>
-  
-  <h1>Eat-A-Burger</h1>
-
-</header>
-
-<main>
-
-  <div class="container">
-    <div class="menu">
-      <h2>Choose Your Burger</h2>
-      <ul>
-        <li>Burger 1</li>
-        <li>Burger 2</li>
-        <li>Burger 3</li>
-      </ul>
-      <a href="#" class="waves-effect waves-light">Eat-Da-Burger!</a>
-    </div>
-    <div class="row">
-      
-      <div class="col l6 s12">
-      <a href="#" class="waves-effect waves-light">Devour It</a>
-      </div>
-
-      <div class="col l6 s12">
-
-      </div>
-    
-    </div>
-
+<div class="container-fluid">
+  <div>
+    <h1>Eat Da Burger!</h1>
   </div>
+  <div class= "row">
+    <div class="col m6">
+      Not Devoured
+      {{#each burger_data}}
+        {{#unless this.devoured}}
+        <div class="burgerBorder"> 
+          <div>
+            <div class="burger">{{this.id}}. {{this.burger_name}}</div>
+          </div>
+        </div>
+        <div class="devourBtn">
+          <form method="POST" action="/update?_method=POST">
+            <input type="hidden" type="text" name="id" value={{this.id}}>
+            <button type="submit" class="btn">Devour!</button>
+          </form>
+        </div>
+        {{/unless}}
+      {{/each}}
+    </div>
+    <div class="col m6">
+      Devoured
+      {{#each burger_data}}
+        {{#if this.devoured}}
+        <div class="burgerBorder">
+          <div>
+            <div class="burger">{{this.id}}. {{this.burger_name}}</div>
+          </div>
+        </div>
+        {{/if}}
+      {{/each}}
+    </div>
+  </div>
+  <div class=row>
+    <div class="col m12">
+      <form action="/create" method="POST">
+        <input placeholder="Enter Burger Name" name="burger_name"></input><br>
+        <button type="submit" id="addBurgerBtn" class="btn">Add A New Burger!</button>
+      </form>
+    </div>
+  </div>
+</div>
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</main>

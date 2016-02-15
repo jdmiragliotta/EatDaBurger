@@ -1,17 +1,20 @@
-var orm = require("../config/orm.js");
+var orm = require('../config/orm.js');
 
-var burgers = {
-  addBurger: function(nameInput, cb){
-    orm.add("burgers", nameInput, cb);
+
+var addOrDevour = {
+
+  findAllBurgers: function(callback) {
+    orm.allBurgers(callback);
   },
-  devourBurger: function(inputId, cb){
-    orm.devour("burgers", inputId, cb);
+
+  addBurger: function(burgerName, callback) {
+    orm.newBurger(burgerName, callback);
   },
-  findAll: function(cb) {
-    orm.selectAll("burgers", function(res){
-      cb(res);
-    });
+
+  devour: function(burgerName, callback) {
+    orm.devour(burgerName, callback);
   }
-};
+}
 
-module.exports = burgers;
+
+module.exports = addOrDevour;

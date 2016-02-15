@@ -1,30 +1,30 @@
 var express = require('express');
-var router = express.Router();
-var thing = require('../models/burger.js');
+var router = require('router');
+var burger = require('../models/burger.js');
 
+var app = express();
 
-router.get('/index', function(req,res) {
-  burger.findAll(function(burger_data){
-    res.render('index', {burger_data});
+module.exports.burgerController = function(app) {
+
+  app.get('/', function(req, res) {
+    burger.findAllBurgers(function(burgers) {
+      var data = {
+        allBurgers: burgers
+      }
+      res.render('index', {burgers});
+    });
+    
   });
-});
 
-
-router.post('/create', function(req, res){
-  console.log(req.body.id);
-  burger.addBurger(req.body.id, function(result){
-    console.log(result);
-    res.redirect('/');
+  app.post('/newBurger', function(req, res) {
+    burger.addBurger(req.body.burgerName, function(result) {
+      res.redirect('/');
+    });
   });
-});
 
-router.post('/update', function(req, res){
-  console.log(req.body.id);
-  burger.devourBurger(req.body.id, function(result){
-    console.log(result);
-    res.redirect('/');
+  app.post('/devour/:burgerName', function(req, res) {
+    burger.devour(req.params.burgerName, function(result) {
+      res.redirect('/');
+    });
   });
-});
-
-
-module.exports = router;
+}
